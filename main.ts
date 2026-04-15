@@ -22,6 +22,9 @@ let initiated = false
 
 //     block="◌ ◌" enumval=3
 //     Tracking_State_3
+radio.setGroup(1)
+radio.setTransmitPower(7) // max range
+
 
 function turnLeft(step:number){
     correction = (correction < 0)?baseCorrection:correction + step
@@ -79,7 +82,7 @@ function is1000(): boolean {
 basic.forever(function () {
     if(isRunning){
     if (is0001()) {
-        turnRight(2*correctionStep)
+        turnRight(correctionStep)
     }else if(is0011()){
         turnRight(correctionStep)
     }else if(is0110()){
@@ -96,10 +99,11 @@ basic.forever(function () {
     }else if (is1100()) {
         turnLeft(correctionStep)
     } else if (is1000()) {
-        turnLeft(2*correctionStep)
+        turnLeft(correctionStep)
     } else if(is1111() ){
         pause(100)
         if (is1111()){
+            radio.sendString("done")
         neZha.stopAllMotor()
         isRunning = false;
         initiated = false;
@@ -109,6 +113,7 @@ basic.forever(function () {
     } else if (is0110() && initiated){
         pause(1000)
         if(is0110()){
+            radio.sendString("emergency")
         neZha.setMotorSpeed(neZha.MotorList.M1, baseSpeed)
         neZha.setMotorSpeed(neZha.MotorList.M4, baseSpeed)
         correction = 0
