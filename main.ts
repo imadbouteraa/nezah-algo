@@ -119,12 +119,12 @@ basic.forever(function () {
         correction = 0
         isRunning = true
         pause(10)
-        control.inBackground(function () {
-            while (isRunning) {
-                music.playTone(800, 200)  // High tone
-                music.playTone(400, 200)  // Low tone
-            }
-        })
+        // control.inBackground(function () {
+        //     while (isRunning) {
+        //         music.playTone(800, 200)  // High tone
+        //         music.playTone(400, 200)  // Low tone
+        //     }
+        // })
         }
     } else if(!initiated && is0000() && !isRunning){
         initiated = true
